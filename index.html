@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>계산기</title>
+</head>
+<body>
+    <style rel="stylesheet" type="text/css">
+        .btns{
+            font-size:2em;
+            text-align:center;
+            width:50px;
+            height:50px;
+            background-color: white;
+            border:3px, black, solid;
+        }   
+        #mainDiv{
+                position:absolute;
+                width:450px;
+                height:600px;
+                left:40px;
+                top:40px;
+                background-color:aquamarine;
+                border-radius: 25px;
+                border:3px, black, solid;
+        }
+        #inputted-val{
+                    position:absolute;
+                    width:400px;
+                    height:100px;
+                    left:25px;
+                    top:25px;
+                    background-color:white;
+                    border-radius: 25px;
+                    border:3px, black, solid;
+        }         
+        #how-to-use{
+                    position:absolute;
+                    left:600px;
+                    top:40px;
+                    width:50px;
+                    height:50px;
+                    border-radius:50px;
+                    border:3px, black, solid;
+        }
+        #how-to-use-text{
+                        position:absolute;
+                        left:20px;
+                        top:-12px;
+                        color:black;
+        }
+        #inputted-val-text{
+                            text-align:right;
+                            margin-right:10px;
+        }
+        #btn-1{
+                position:absolute;
+                left:10px;
+                top:150px;
+                border-top-left-radius:25px;
+        }
+        #btn-2{
+                position:absolute;
+                left:60px;
+                top:150px;
+        }
+        #btn-3{
+                position:absolute;
+                left:110px;
+                top:150px;
+                border-top-right-radius:25px;
+        }
+        #btn-4{
+               position:absolute;
+                left:10px;
+                top:200px;
+        } 
+        #btn-5{
+                position:absolute;
+                left:60px;
+                top:200px;
+        }
+        #btn-6{
+                position:absolute;
+                left:110px;
+                top:200px;
+        }
+        #btn-7{
+                position:absolute;
+                left:10px;
+                top:250px;
+        }
+        #btn-8{
+                position:absolute;
+                left:60px;
+                top:250px;
+        }
+        #btn-9{
+                position:absolute;
+                left:110px;
+                top:250px;
+        }
+        #btn-dot{ position:absolute;
+                left:10px;
+                top:300px;
+                border-bottom-left-radius:25px;
+        }
+        #btn-0{
+                position:absolute;
+                width:48px;
+                left:60px;
+                top:300px;
+                z-index: 3;
+        }
+        #btn-result{ 
+                position:absolute;
+                left:110px;
+                top:300px;
+                border-bottom-right-radius:25px;
+        }
+        #nums-container{
+                position:absolute;
+                left:135px;
+                top:120px;
+        }
+        #btn-add{
+            position:absolute;
+            top:150px;
+            left:95px;
+        }
+        #btn-min{
+            position:absolute;
+            top:150px;
+            left:145px;
+        }
+        #btn-divi{
+            position:absolute;
+            top:150px;
+            left:195px;
+        }
+        #btn-mul{
+            position:absolute;
+            top:150px;
+            left:245px;
+        }
+        #btn-pow{
+            position:absolute;
+            top:150px;
+            left:295px;
+        }
+        #btn-rem{
+            position:absolute;
+            top:150px;
+            left:345px;
+            border-top-right-radius:10px;
+            border-bottom-right-radius:10px;
+        }
+        #btn-clear{
+            position:absolute;
+            top:150px;
+            left:45px;
+            border-top-left-radius:10px;
+            border-bottom-left-radius:10px;
+        }
+        #inputted-fn-text{
+            position:absolute;
+            left:330px;
+            top:-12px;
+            background-color:black;
+            color:white;
+            width:25px;
+            text-align: center;
+        }
+        
+    </style>
+    <div id="mainDiv">
+        <div id="inputted-val">
+            <h1 id="inputted-val-text"></h1>
+            <strong><h3 id="inputted-fn-text"></h3></strong>
+        </div>
+        <div id="btn-container">
+            <div id="nums-container">
+            <div id="btn-1" class="btns" onclick="addNum(1)"><strong>1</strong></div>
+            <div id="btn-2" class="btns" onclick="addNum(2)"><strong>2</strong></div>
+            <div id="btn-3" class="btns" onclick="addNum(3)"><strong>3</strong></div>
+            <div id="btn-4" class="btns" onclick="addNum(4)"><strong>4</strong></div>
+            <div id="btn-5" class="btns" onclick="addNum(5)"><strong>5</strong></div>
+            <div id="btn-6" class="btns" onclick="addNum(6)"><strong>6</strong></div>
+            <div id="btn-7" class="btns" onclick="addNum(7)"><strong>7</strong></div>
+            <div id="btn-8" class="btns" onclick="addNum(8)"><strong>8</strong></div>
+            <div id="btn-9" class="btns" onclick="addNum(9)"><strong>9</strong></div>
+            <div id="btn-0" class="btns" onclick="addNum(0)"><strong>0</strong></div>
+            <div id="btn-dot" class="btns" onclick="if(numArr.length < 21) {
+                                                        if(numArr.join('').indexOf('.') == -1) {
+                                                            numArr.push('.');
+                                                        } else {
+                                                            alert('소수점은 한번만 입력할 수 있습니다');
+                                                        }
+                                                    } else {
+                                                        alert('20자리를 초과 하셨습니다.');
+                                                    }
+                                                  textNum.textContent = numArr.join('');"><strong>.</strong></div>
+            <div id="btn-result" class="btns" onclick="secondNum = makeNum();
+                                                       makeResult(); textNum.textContent = makeResult(); 
+                                                       document.getElementById('btn-add').style.backgroundColor = 'white';
+                                                       document.getElementById('btn-min').style.backgroundColor = 'white';
+                                                       document.getElementById('btn-divi').style.backgroundColor = 'white';
+                                                       document.getElementById('btn-mul').style.backgroundColor = 'white';
+                                                       document.getElementById('btn-pow').style.backgroundColor = 'white';
+                                                       document.getElementById('btn-rem').style.backgroundColor = 'white';
+                                                       firstNum = makeResult();
+                                                       secondNum = undefined;
+                                                       currentFn = undefined;
+                                                       numArr = [];
+                                                       document.getElementById('inputted-fn-text').textContent = '';"><strong>=</strong></div>
+            </div>    
+            <div id="btn-clear" class="btns" onclick="  firstNum = undefined;
+                                                        secondNum = undefined;
+                                                        currentFn = undefined; numArr = [];
+                                                        document.getElementById('inputted-fn-text').textContent = '';
+                                                        document.getElementById('btn-add').style.backgroundColor = 'white';
+                                                        document.getElementById('btn-min').style.backgroundColor = 'white';
+                                                        document.getElementById('btn-divi').style.backgroundColor = 'white';
+                                                        document.getElementById('btn-mul').style.backgroundColor = 'white';
+                                                        document.getElementById('btn-pow').style.backgroundColor = 'white';
+                                                        document.getElementById('btn-rem').style.backgroundColor = 'white';
+            "><strong>c</strong></div>                             
+            <div id="btn-add" class="btns" onclick="
+            if (changeFn(add)) {
+                document.getElementById('btn-add').style.backgroundColor = 'white';
+                document.getElementById('btn-min').style.backgroundColor = 'white';
+                document.getElementById('btn-divi').style.backgroundColor = 'white';
+                document.getElementById('btn-mul').style.backgroundColor = 'white';
+                document.getElementById('btn-pow').style.backgroundColor = 'white';
+                document.getElementById('btn-rem').style.backgroundColor = 'white';
+                textNum.textContent = '';
+                if(firstNum == undefined){
+                    firstNum = makeNum();
+                    numArr = []; 
+                }
+                changeFn(add);
+            } else {}"><strong>+</strong></div>
+            <div id="btn-min" class="btns" onclick="
+            if (changeFn(minus)) {
+                document.getElementById('btn-add').style.backgroundColor = 'white';
+                document.getElementById('btn-min').style.backgroundColor = 'white';
+                document.getElementById('btn-divi').style.backgroundColor = 'white';
+                document.getElementById('btn-mul').style.backgroundColor = 'white';
+                document.getElementById('btn-pow').style.backgroundColor = 'white';
+                document.getElementById('btn-rem').style.backgroundColor = 'white';
+                textNum.textContent = '';
+                if(firstNum == undefined){
+                    firstNum = makeNum();
+                    numArr = []; 
+                }
+                changeFn(minus);
+            } else {}"><strong>-</strong></div>
+            <div id="btn-divi" class="btns" onclick="
+            if (changeFn(division)) {
+                document.getElementById('btn-add').style.backgroundColor = 'white';
+                document.getElementById('btn-min').style.backgroundColor = 'white';
+                document.getElementById('btn-divi').style.backgroundColor = 'white';
+                document.getElementById('btn-mul').style.backgroundColor = 'white';
+                document.getElementById('btn-pow').style.backgroundColor = 'white';
+                document.getElementById('btn-rem').style.backgroundColor = 'white';
+                textNum.textContent = '';
+                if(firstNum == undefined){
+                    firstNum = makeNum();
+                    numArr = []; 
+                }
+                changeFn(division);
+            } else {}"><strong>÷</strong></div>
+            <div id="btn-mul" class="btns" onclick="
+            if (changeFn(multiply)) {
+                document.getElementById('btn-add').style.backgroundColor = 'white';
+                document.getElementById('btn-min').style.backgroundColor = 'white';
+                document.getElementById('btn-divi').style.backgroundColor = 'white';
+                document.getElementById('btn-mul').style.backgroundColor = 'white';
+                document.getElementById('btn-pow').style.backgroundColor = 'white';
+                document.getElementById('btn-rem').style.backgroundColor = 'white';
+                textNum.textContent = '';
+                if(firstNum == undefined){
+                    firstNum = makeNum();
+                    numArr = []; 
+                }
+                changeFn(multiply);
+            } else {}"><strong>x</strong></div>
+            <div id="btn-pow" class="btns" onclick="
+            if (changeFn(power)) {
+                document.getElementById('btn-add').style.backgroundColor = 'white';
+                document.getElementById('btn-min').style.backgroundColor = 'white';
+                document.getElementById('btn-divi').style.backgroundColor = 'white';
+                document.getElementById('btn-mul').style.backgroundColor = 'white';
+                document.getElementById('btn-pow').style.backgroundColor = 'white';
+                document.getElementById('btn-rem').style.backgroundColor = 'white';
+                textNum.textContent = '';
+                if(firstNum == undefined){
+                    firstNum = makeNum();
+                    numArr = []; 
+                }
+                changeFn(power);
+            } else {}"><strong>^</strong></div>
+            <div id="btn-rem" class="btns" onclick="           
+            if (changeFn(remainder)) {
+                document.getElementById('btn-add').style.backgroundColor = 'white';
+                document.getElementById('btn-min').style.backgroundColor = 'white';
+                document.getElementById('btn-divi').style.backgroundColor = 'white';
+                document.getElementById('btn-mul').style.backgroundColor = 'white';
+                document.getElementById('btn-pow').style.backgroundColor = 'white';
+                document.getElementById('btn-rem').style.backgroundColor = 'white';
+                textNum.textContent = '';
+                if(firstNum == undefined){
+                    firstNum = makeNum();
+                    numArr = []; 
+                }
+                changeFn(remainder);
+            } else {}"><strong>%</strong></div>
+        </div>
+    </div>
+    <a href="./howToUse.html" target="_blank">
+    <div id="how-to-use"><h2 id="how-to-use-text">?</h2></div>
+    </a>
+    <script>
+        let firstNum = undefined;
+        let secondNum = undefined;
+        let currentFn = undefined;
+        let numArr = [];
+        let textNum = document.getElementById('inputted-val-text')
+        //계산 함수들
+        function add () {
+            let result =  firstNum + secondNum;
+            if(String(result).length < 21) {
+            return result;
+        } else {
+            alert('20자리 이하만 입력가능 합니다.');
+            }
+        }
+        function minus () {
+            let result = firstNum - secondNum;
+            if (result > -1) {
+                if(String(result).length < 21) {
+            return result;
+        } else {
+            alert('20자리 이하만 입력가능 합니다.');
+        }
+            } else {
+                alert('음수는 입력하실 수 없습니다.');
+            }
+        }
+        function division () {
+            let result = Math.floor(firstNum / secondNum * 10000000000) / 10000000000;
+            if(String(result).length < 21) {
+            return result;
+        } else {
+            alert('20자리 이하만 입력가능 합니다.');
+            }
+        }
+        function multiply () {
+            let result = firstNum * secondNum;
+            if(String(result).length < 21) {
+            return result;
+        } else {
+            alert('20자리 이하만 입력가능 합니다.');
+            }
+        }
+        function power () {
+            result = Math.pow(firstNum, secondNum);
+            if(String(result).length < 21) {
+            return result;
+        } else {
+            alert('20자리 이하만 입력가능 합니다.');
+            }
+        }
+        function remainder () {
+            let quo = Math.floor(firstNum / secondNum);
+            let rem = firstNum % secondNum;
+            let result = [quo, rem];
+            return result;
+        } 
+        //숫자 배열 생성
+        function addNum (inputtedNum, number) {
+            document.getElementById('inputted-val-text').textContent = ''
+            if(numArr.length < 21) {
+                numArr.push(inputtedNum);
+            } else {
+                alert('20자리를 초과 하셨습니다.');
+            }
+            document.getElementById('inputted-val-text').textContent = numArr.join("");
+        }
+        //계산값 반환
+        function makeResult () {
+            if(currentFn == remainder) {
+                let result = Number(remainder().join(""));
+            if(isNaN(result)){
+                alert('잘못된 계산식 입니다.');
+            } else {
+                return `${remainder()[0]} ㆍㆍㆍ${remainder()[1]}`;
+            }
+            } else {
+                let result = currentFn(); 
+                console.log(result);
+            if(isNaN(result)) {
+                alert('잘못된 계산식 입니다.');
+                return null;
+            } else {
+                return result;
+            }
+        }
+            
+        }
+        //연산기호 변경
+        function changeFn (fn) {
+            if(firstNum == 0) {
+                alert('첫번째 수를 입력하지 않았습니다.');
+                console.log(currentFn)
+                return false;
+            } else {
+            switch(fn){
+                case add: document.getElementById('btn-add').style.backgroundColor = 'orange';
+                document.getElementById('inputted-fn-text').textContent = '+';
+                          break;
+                case minus: document.getElementById('btn-min').style.backgroundColor = 'orange';
+                document.getElementById('inputted-fn-text').textContent = '-';
+                          break;
+                case division: document.getElementById('btn-divi').style.backgroundColor = 'orange';
+                document.getElementById('inputted-fn-text').textContent = '÷';
+                          break;
+                case multiply: document.getElementById('btn-mul').style.backgroundColor = 'orange';
+                document.getElementById('inputted-fn-text').textContent = 'x';
+                          break;
+                case power: document.getElementById('btn-pow').style.backgroundColor = 'orange';
+                document.getElementById('inputted-fn-text').textContent = '^';
+                          break;
+                case remainder: document.getElementById('btn-rem').style.backgroundColor = 'orange';
+                document.getElementById('inputted-fn-text').textContent = '%';
+                          break;
+            }
+                currentFn = fn;
+                return true;
+            }
+        }
+        //수 생성
+        function makeNum () {
+            return Number(numArr.join(""));
+        }
+
+        //console.log(add());
+        //console.log(minus());
+        //console.log(multiply());
+        //console.log(division());
+        //console.log(power());
+        //console.log(remainder());
+        console.log(makeResult());
+        setInterval(function () {console.log(numArr)}, 1000);
+    </script>
+</body>
+</html>
